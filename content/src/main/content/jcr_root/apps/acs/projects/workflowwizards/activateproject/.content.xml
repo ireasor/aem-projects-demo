@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Activate Project"
+        sling:resourceType="cq/gui/components/projects/admin/wizard/page"
+        class="cq-project-admin-wizard-page"
+        clientLibs="cq.projects.admin.startworkflow"
+        params="[${param.modelId},${param.project}]">
+        <content jcr:primaryType="nt:unstructured">
+            <items jcr:primaryType="nt:unstructured">
+                <createwizard
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/foundation/form/wizard"
+                    class="hide-steps foundation-form"
+                    method="post"
+                    rel="cq-projects-admin-startwork-wizard">
+                    <items jcr:primaryType="nt:unstructured">
+                        <workflow
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Activate Project"
+                            sling:resourceType="cq/gui/components/projects/admin/wizard/step/startwork">
+                            <items jcr:primaryType="nt:unstructured">
+                                <container
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/foundation/container">
+                                    <layout
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="cq/gui/components/projects/admin/layout/twocol"/>
+                                    <left jcr:primaryType="nt:unstructured">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <grid
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/foundation/container"
+                                                class="grid">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <details
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="cq/gui/components/projects/admin/card/workflowmodeldetailscard"
+                                                        workflowModelPath="${param.modelId}"/>
+                                                </items>
+                                            </grid>
+                                        </items>
+                                    </left>
+                                    <right jcr:primaryType="nt:unstructured">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <workflow
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/foundation/form/fieldset">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <charset
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/foundation/form/hidden"
+                                                        name="_charset_"
+                                                        value="utf-8"/>
+                                                    <linkType
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/foundation/form/hidden"
+                                                        name="linkType"
+                                                        value="cq/gui/components/projects/admin/card/launchcard"/>
+                                                    <workflowtitle
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/foundation/form/textfield"
+                                                        fieldLabel="Title *"
+                                                        name="workflowTitle"
+                                                        required="{Boolean}true"/>
+                                                    <description
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/foundation/form/textarea"
+                                                        fieldLabel="Description"
+                                                        name="startComment"
+                                                        rows="6"/>
+                                                    <liveDate
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/foundation/form/datepicker"
+                                                        displayedFormat="YYYY-MM-DD HH:mm"
+                                                        fieldLabel="Live Date"
+                                                        minDate="today"
+                                                        name="liveDate"
+                                                        type="datetime"/>
+                                                </items>
+                                            </workflow>
+                                        </items>
+                                    </right>
+                                </container>
+                                <cancel
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/foundation/hyperlink"
+                                    class="foundation-wizard-control"
+                                    foundation-wizard-control-action="cancel"
+                                    href="/projects/details.html${param.project}"
+                                    text="Cancel"/>
+                                <create
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/foundation/form/submit"
+                                    class="foundation-wizard-control"
+                                    disabled="{Boolean}true"
+                                    foundation-wizard-control-action="next"
+                                    text="Create"/>
+                            </items>
+                        </workflow>
+                    </items>
+                </createwizard>
+            </items>
+        </content>
+    </jcr:content>
+</jcr:root>

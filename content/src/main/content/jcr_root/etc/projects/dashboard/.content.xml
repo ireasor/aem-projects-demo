@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:rep="internal"
+    jcr:mixinTypes="[rep:AccessControllable]"
+    jcr:primaryType="nt:unstructured">
+    <gadgets jcr:primaryType="nt:unstructured">
+        <asset/>
+        <assetcollection/>
+        <experiences
+            jcr:primaryType="nt:unstructured"
+            allow="1"
+            type="experience">
+            <site
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Site"
+                icon="coral-Icon--globe"
+                type="site"/>
+            <jcr:content
+                jcr:description="Experiences Tile"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Experiences"
+                sling:resourceType="cq/gui/components/projects/admin/pod/channelpod"
+                cardWeight="90">
+                <image jcr:primaryType="nt:unstructured">
+                    <file/>
+                </image>
+            </jcr:content>
+        </experiences>
+        <externallinks/>
+        <team/>
+        <projectinfo/>
+        <work/>
+        <launch/>
+        <email/>
+        <landing/>
+        <tasks/>
+        <translationsummary/>
+        <translationjob/>
+    </gadgets>
+    <rep:policy/>
+</jcr:root>

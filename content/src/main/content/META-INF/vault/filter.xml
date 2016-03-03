@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+    <filter root="/apps/acs"/>
+    <filter root="/content/projects/jcr:content"/>
+    <filter root="/etc/workflow/models/activate_project"/>
+    <filter root="/etc/workflow/models/revert_project"/>
+    <filter root="/etc/workflow/models/dam/update_asset"/>
+    <filter root="/etc/projects/dashboard/gadgets/experiences"/>
+</workspaceFilter>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:lastModified="{Date}2016-02-03T21:46:17.971-08:00"
+        cq:lastModifiedBy="admin"
+        cq:tags="[workflow:dam]"
+        cq:template="/libs/cq/workflow/templates/model"
+        jcr:description="This workflow manages the update of assets"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="DAM Update Asset"
+        sling:resourceType="cq/workflow/components/pages/model">
+        <flow
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="foundation/components/parsys">
+            <process
+                jcr:description="This process checks if the complete update process has to be executed. The workflow should terminate  eg. the asset got restored right before to make sure that trhe restored content is preserved."
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Continue updating?"
+                sling:resourceType="cq/workflow/components/model/process">
+                <metaData
+                    jcr:primaryType="nt:unstructured"
+                    PROCESS="com.day.cq.dam.core.process.GateKeeperProcess"
+                    PROCESS_ARGS=""
+                    PROCESS_AUTO_ADVANCE="true"/>
+            </process>
+            <process0
+                jcr:description="Extracts XMP, DC, etc. for all.formats"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Metadata extraction"
+                sling:resourceType="cq/workflow/components/model/process">
+                <metaData
+                    jcr:primaryType="nt:unstructured"
+                    PROCESS="com.day.cq.dam.core.process.ExtractMetadataProcess"
+                    PROCESS_ARGS=""
+                    PROCESS_AUTO_ADVANCE="true"/>
+            </process0>
+            <process1
+                jcr:description="Image &amp; document thumbnails"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Thumbnail creation"
+                sling:resourceType="cq/workflow/components/model/process">
+                <metaData
+                    jcr:primaryType="nt:unstructured"
+                    PROCESS="com.day.cq.dam.core.process.CreateThumbnailProcess"
+                    PROCESS_ARGS="\[140:100],[48:48],[319:319]"
+                    PROCESS_AUTO_ADVANCE="true"/>
+            </process1>
+            <process4
+                jcr:description="This process creates a web enabled rendition. E.g. a jpeg from a tiff (if the tiff file would be the original source)"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Web enabled rendition"
+                sling:resourceType="cq/workflow/components/model/process">
+                <metaData
+                    jcr:primaryType="nt:unstructured"
+                    PROCESS="com.day.cq.dam.core.process.CreateWebEnabledImageProcess"
+                    PROCESS_ARGS="dimension:1280:1280,mimetype:image/jpeg,quality:90,skip:application/pdf,skip:audio/mpeg,skip:video/(.*)"
+                    PROCESS_AUTO_ADVANCE="true"/>
+            </process4>
+            <createreferenceprocess
+                jcr:created="{Date}2013-07-25T10:00:40.699Z"
+                jcr:createdBy="admin"
+                jcr:description="This process will link references of the asset"
+                jcr:lastModified="{Date}2013-07-25T10:00:40.699Z"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Create Reference"
+                sling:resourceType="dam/components/workflow/createreferenceprocess">
+                <metaData
+                    jcr:primaryType="nt:unstructured"
+                    PROCESS="com.day.cq.dam.core.process.CreateReferenceProcess"
+                    PROCESS_AUTO_ADVANCE="true"/>
+            </createreferenceprocess>
+            <updatefolderthumbnai
+                jcr:created="{Date}2014-03-10T17:50:03.113+05:30"
+                jcr:createdBy="admin"
+                jcr:description="This process will update the thumbnail of the asset's parent folder (if required)"
+                jcr:lastModified="{Date}2014-03-10T17:50:03.113+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Update Folder Thumbnail"
+                sling:resourceType="dam/components/workflow/updatefolderthumbnailprocess">
+                <metaData
+                    jcr:primaryType="nt:unstructured"
+                    PROCESS="com.day.cq.dam.core.process.UpdateFolderThumbnailProcess"
+                    PROCESS_AUTO_ADVANCE="true"/>
+            </updatefolderthumbnai>
+            <processingprofilesprocess
+                jcr:created="{Date}2013-07-31T13:02:50.079Z"
+                jcr:createdBy="admin"
+                jcr:description="Apply metadata processing profile to uploaded assets"
+                jcr:lastModified="{Date}2013-07-31T13:07:13.439Z"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Apply Metadata Processing Profile"
+                sling:resourceType="cq/workflow/components/model/process">
+                <metaData
+                    jcr:primaryType="nt:unstructured"
+                    PROCESS="com.day.cq.dam.core.process.ApplyProcessingProfileProcess"
+                    PROCESS_AUTO_ADVANCE="true"/>
+            </processingprofilesprocess>
+            <process_2
+                jcr:created="{Date}2015-03-30T16:12:47.282-04:00"
+                jcr:createdBy="admin"
+                jcr:description="Creates a version for the asset"
+                jcr:lastModified="{Date}2016-02-03T21:46:17.960-08:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Create Asset Version"
+                sling:resourceType="cq/workflow/components/model/process">
+                <metaData
+                    jcr:primaryType="nt:unstructured"
+                    PROCESS="com.adobe.acs.activationproject.DAMCreateAssetVersion"
+                    PROCESS_AUTO_ADVANCE="true"/>
+            </process_2>
+        </flow>
+        <model/>
+    </jcr:content>
+</jcr:root>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:description="Group assets and pages for grouped activation and rollback"
+    jcr:primaryType="cq:Template"
+    jcr:title="Project Based Activation"
+    ranking="{Long}1"
+    wizard="/libs/cq/core/content/projects/wizard/steps/defaultproject.html">
+    <jcr:content jcr:primaryType="nt:unstructured"/>
+    <gadgets jcr:primaryType="nt:unstructured">
+        <team
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Team"
+            sling:resourceType="cq/gui/components/projects/admin/pod/teampod"/>
+        <work
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Workflows"
+            sling:resourceType="cq/gui/components/projects/admin/pod/workpod"/>
+        <pages
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Pages"
+            sling:resourceType="cq/gui/components/projects/admin/pod/channelpod"
+            cardWeight="90"/>
+        <assetcollection
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Assets"
+            sling:resourceType="cq/gui/components/projects/admin/pod/collectionspod"
+            cardWeight="90"/>
+    </gadgets>
+    <workflows
+        jcr:primaryType="nt:unstructured"
+        tags="[]">
+        <models jcr:primaryType="nt:unstructured">
+            <activateproject
+                jcr:primaryType="nt:unstructured"
+                modelId="/etc/workflow/models/activate_project/jcr:content/model"
+                wizard="/apps/acs/projects/workflowwizards/activateproject.html"/>
+            <revertproject
+                jcr:primaryType="nt:unstructured"
+                modelId="/etc/workflow/models/revert_project/jcr:content/model"
+                wizard="/libs/cq/core/content/projects/workflowwizards/photoshoot.html"/>
+        </models>
+    </workflows>
+</jcr:root>

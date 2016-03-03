@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:isCheckedOut="{Boolean}false"
+    jcr:primaryType="cq:WorkflowModel"
+    jcr:uuid="01001f76-9ea5-45ed-934f-dca169e9c9b6"
+    sling:resourceType="cq/workflow/components/model"
+    description="This workflow manages the update of assets"
+    title="DAM Update Asset">
+    <metaData
+        cq:lastModified="{Long}1454564782650"
+        cq:lastModifiedBy="admin"
+        jcr:primaryType="nt:unstructured"/>
+    <nodes jcr:primaryType="nt:unstructured">
+        <node0
+            jcr:primaryType="cq:WorkflowNode"
+            title="Start"
+            type="START">
+            <metaData jcr:primaryType="nt:unstructured"/>
+        </node0>
+        <node1
+            jcr:primaryType="cq:WorkflowNode"
+            description="This process checks if the complete update process has to be executed. The workflow should terminate  eg. the asset got restored right before to make sure that trhe restored content is preserved."
+            title="Continue updating?"
+            type="PROCESS">
+            <metaData
+                jcr:primaryType="nt:unstructured"
+                PROCESS="com.day.cq.dam.core.process.GateKeeperProcess"
+                PROCESS_ARGS=""
+                PROCESS_AUTO_ADVANCE="true"/>
+        </node1>
+        <node2
+            jcr:primaryType="cq:WorkflowNode"
+            description="Extracts XMP, DC, etc. for all.formats"
+            title="Metadata extraction"
+            type="PROCESS">
+            <metaData
+                jcr:primaryType="nt:unstructured"
+                PROCESS="com.day.cq.dam.core.process.ExtractMetadataProcess"
+                PROCESS_ARGS=""
+                PROCESS_AUTO_ADVANCE="true"/>
+        </node2>
+        <node7
+            jcr:primaryType="cq:WorkflowNode"
+            description="Image &amp; document thumbnails"
+            title="Thumbnail creation"
+            type="PROCESS">
+            <metaData
+                jcr:primaryType="nt:unstructured"
+                PROCESS="com.day.cq.dam.core.process.CreateThumbnailProcess"
+                PROCESS_ARGS="\[140:100],[48:48],[319:319]"
+                PROCESS_AUTO_ADVANCE="true"/>
+        </node7>
+        <node11
+            jcr:primaryType="cq:WorkflowNode"
+            description="This process creates a web enabled rendition. E.g. a jpeg from a tiff (if the tiff file would be the original source)"
+            title="Web enabled rendition"
+            type="PROCESS">
+            <metaData
+                jcr:primaryType="nt:unstructured"
+                PROCESS="com.day.cq.dam.core.process.CreateWebEnabledImageProcess"
+                PROCESS_ARGS="dimension:1280:1280,mimetype:image/jpeg,quality:90,skip:application/pdf,skip:audio/mpeg,skip:video/(.*)"
+                PROCESS_AUTO_ADVANCE="true"/>
+        </node11>
+        <node16
+            jcr:primaryType="cq:WorkflowNode"
+            description="This process will link references of the asset"
+            title="Create Reference"
+            type="PROCESS">
+            <metaData
+                jcr:primaryType="nt:unstructured"
+                PROCESS="com.day.cq.dam.core.process.CreateReferenceProcess"
+                PROCESS_AUTO_ADVANCE="true"/>
+        </node16>
+        <node17
+            jcr:primaryType="cq:WorkflowNode"
+            description="This process will update the thumbnail of the asset's parent folder (if required)"
+            title="Update Folder Thumbnail"
+            type="PROCESS">
+            <metaData
+                jcr:primaryType="nt:unstructured"
+                PROCESS="com.day.cq.dam.core.process.UpdateFolderThumbnailProcess"
+                PROCESS_AUTO_ADVANCE="true"/>
+        </node17>
+        <node18
+            jcr:primaryType="cq:WorkflowNode"
+            description="Apply metadata processing profile to uploaded assets"
+            title="Apply Metadata Processing Profile"
+            type="PROCESS">
+            <metaData
+                jcr:primaryType="nt:unstructured"
+                PROCESS="com.day.cq.dam.core.process.ApplyProcessingProfileProcess"
+                PROCESS_AUTO_ADVANCE="true"/>
+        </node18>
+        <node21
+            jcr:primaryType="cq:WorkflowNode"
+            description="Creates a version for the asset"
+            title="Create Asset Version"
+            type="PROCESS">
+            <metaData
+                jcr:primaryType="nt:unstructured"
+                PROCESS="com.adobe.acs.activationproject.DAMCreateAssetVersion"
+                PROCESS_AUTO_ADVANCE="true"/>
+        </node21>
+        <node22
+            jcr:primaryType="cq:WorkflowNode"
+            title="End"
+            type="END">
+            <metaData jcr:primaryType="nt:unstructured"/>
+        </node22>
+    </nodes>
+    <transitions jcr:primaryType="nt:unstructured">
+        <node0_x0023_node1
+            jcr:primaryType="cq:WorkflowTransition"
+            from="node0"
+            rule=""
+            to="node1">
+            <metaData jcr:primaryType="nt:unstructured"/>
+        </node0_x0023_node1>
+        <node1_x0023_node2
+            jcr:primaryType="cq:WorkflowTransition"
+            from="node1"
+            rule=""
+            to="node2">
+            <metaData jcr:primaryType="nt:unstructured"/>
+        </node1_x0023_node2>
+        <node2_x0023_node7
+            jcr:primaryType="cq:WorkflowTransition"
+            from="node2"
+            rule=""
+            to="node7">
+            <metaData jcr:primaryType="nt:unstructured"/>
+        </node2_x0023_node7>
+        <node7_x0023_node11
+            jcr:primaryType="cq:WorkflowTransition"
+            from="node7"
+            rule=""
+            to="node11">
+            <metaData jcr:primaryType="nt:unstructured"/>
+        </node7_x0023_node11>
+        <node11_x0023_node16
+            jcr:primaryType="cq:WorkflowTransition"
+            from="node11"
+            rule=""
+            to="node16">
+            <metaData jcr:primaryType="nt:unstructured"/>
+        </node11_x0023_node16>
+        <node16_x0023_node17
+            jcr:primaryType="cq:WorkflowTransition"
+            from="node16"
+            rule=""
+            to="node17">
+            <metaData jcr:primaryType="nt:unstructured"/>
+        </node16_x0023_node17>
+        <node17_x0023_node18
+            jcr:primaryType="cq:WorkflowTransition"
+            from="node17"
+            rule=""
+            to="node18">
+            <metaData jcr:primaryType="nt:unstructured"/>
+        </node17_x0023_node18>
+        <node18_x0023_node21
+            jcr:primaryType="cq:WorkflowTransition"
+            from="node18"
+            rule=""
+            to="node21">
+            <metaData jcr:primaryType="nt:unstructured"/>
+        </node18_x0023_node21>
+        <node21_x0023_node22
+            jcr:primaryType="cq:WorkflowTransition"
+            from="node21"
+            to="node22">
+            <metaData jcr:primaryType="nt:unstructured"/>
+        </node21_x0023_node22>
+    </transitions>
+</jcr:root>
